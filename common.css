@@ -1,0 +1,64 @@
+@charset "utf-8";
+/*-----------------------------------------------*/
+/* Reset & Default Setting ----------------------*/
+
+html, body, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p,
+header, hgroup, section, article, aside, hgroup, footer, figure, figcaption, nav {
+	position:relative;
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	/*font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;*/
+}
+html{
+	position:relative;
+	line-height: 1.0;
+}
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary { 
+	display:block;
+}
+img {
+	border: 0;
+	vertical-align: bottom;
+}
+ul, ol {
+	list-style: none;
+}
+table {
+	border-spacing: 0;
+	empty-cells: show;
+}
+a,a:link,a:visited,a:hover,a:active{
+	color:#000;
+	text-decoration:none;
+}
+
+/* Common ---------------------------------------*/
+html{
+	width:320px;
+}
+body{
+	position:relative;
+	width:100%;
+	margin:0 auto;
+}
+* img{
+	/*zoom:0.5;*/
+}
+
+header{
+	padding:20px;
+}
+header h1{
+	font-size:24px;
+}
+
+
+footer{
+	margin:20px 0px 0px 0px;
+	padding:10px;
+	text-align:center;
+	color:#FFF;
+	background-color:#333;
+}

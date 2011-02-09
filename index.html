@@ -1,10 +1,61 @@
 <!DOCTYPE html>
 <html lang="ja_JP">
 <head>
-	<meta charset="UTF-8">
-	<title>jQ Smart Slider</title>
+<meta charset="UTF-8">
+<title>jQuery Smart Slider</title>
+
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=320,maximum-scale=3.0,minimum-scale=0.5,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<link rel="stylesheet" href="common.css">
+<style>
+#main{
+	padding:20px;
+	background-color:#CCC;
+}
+.jQSS{
+	position:relative;
+	width:100%;
+	overflow-x:auto;
+  overflow-y:hidden;
+}
+.jQSS>ul{
+	position:relative;
+}
+.jQSS>ul>li{
+	float:left;
+	width:80px;
+	height:80px;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script src="jq.smart.slider.js"></script>
+
 </head>
 <body>
-	
+<header>
+<h1>jQuery Smart Slider</h1>
+<p>"jQuery Smart Slider" is easy 'flick' menu.</p>
+</header>
+
+<div id="main">
+<section class="demo">
+<h2>Flick Only</h2>
+<div class="jQSS">
+<ul>
+<li><a href=""><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href=""><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href=""><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href=""><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href=""><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+</ul>
+</div>
+<!-- / .demo --></section>
+<!-- / #main --></div>
+
+<footer>
+<small>http://panda-space.com</small>
+</footer>
 </body>
 </html>
