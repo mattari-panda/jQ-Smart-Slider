@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export.dtd">
+<en-export export-date="20110307T135819Z" application="Evernote" version="Evernote Mac 2.0.5 (130391)">
+<note><title>jQ-Smart-Slider</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+ロジック
+<div><br/></div>
+<div>全体のクロージャ</div>
+<div>　■初期値の設定</div>
+<div><br/></div>
+<div>　■初期化＆設定</div>
+<div><br/></div>
+<div>　■タッチ系のイベント設定</div>
+<div><br/></div>
+<div>　■ボタン系のイベント設定</div>
+<div><br/></div>
+<div>　■ポジション表示の設定</div>
+<div><br/></div>
+<div>　■現在地の計算</div>
+<div><br/></div>
+<div>　■右に動く</div>
+<div><br/></div>
+<div>　■左に動く</div>
+<div><br/></div>
+</en-note>
+]]></content><created>20110307T135412Z</created><updated>20110307T135721Z</updated><note-attributes/></note>
+</en-export>

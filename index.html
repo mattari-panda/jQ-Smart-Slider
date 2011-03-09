@@ -5,7 +5,7 @@
 <title>jQuery Smart Slider</title>
 
 <meta name="format-detection" content="telephone=no" />
-<meta name="viewport" content="width=320,maximum-scale=3.0,minimum-scale=0.5,user-scalable=0" />
+<meta name="viewport" content="width=320,maximum-scale=3.0,minimum-scale=0.5,user-scalable=1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 
 <link rel="stylesheet" href="common.css">
@@ -25,8 +25,43 @@
 }
 .jQSS>ul>li{
 	float:left;
+	position:relative;
 	width:80px;
 	height:80px;
+}
+.jQSS>ul>li p{
+	position:absolute;
+	top:40px;
+	left:35px;
+	font-size:20px;
+}
+
+.jQSSBtn{
+	position:relative;
+}
+.jQSSBtn li a,
+.jQSSBtn li a:link{
+	display:inline-block;
+	padding:2px;
+	background-color:#006;
+	color:#FFF;
+}
+.jQSSL{
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+.jQSSR{
+	position:absolute;
+	top:0px;
+	right:0px;
+}
+
+p.debag{
+	display:block;
+	position:absolute;
+	top:80px;
+	color:#003;
 }
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
@@ -44,15 +79,34 @@
 <h2>Flick Only</h2>
 <div class="jQSS">
 <ul>
-<li><a href=""><img src="img/pan_icon_black.gif" alt=""></a></li>
-<li><a href=""><img src="img/pan_icon_blue.gif" alt=""></a></li>
-<li><a href=""><img src="img/pan_icon_green.gif" alt=""></a></li>
-<li><a href=""><img src="img/pan_icon_red.gif" alt=""></a></li>
-<li><a href=""><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+<li><a href=""><p>1</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href=""><p>2</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href=""><p>3</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href=""><p>4</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href=""><p>5</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+<li><a href=""><p>6</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href=""><p>7</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href=""><p>8</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href=""><p>9</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href=""><p>10</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
 </ul>
 </div>
+
+<div class="jQSSBtn">
+<ul>
+  <li class="jQSSL"><a href="#">←</a></li>
+  <li class="jQSSR"><a href="#">→</a></li>
+</ul>
+</div>
+
+<p class="debag"></p>
 <!-- / .demo --></section>
 <!-- / #main --></div>
+
+<section class="console">
+<h3>Console</h3>
+<p></p>
+</section>
 
 <footer>
 <small>http://panda-space.com</small>
