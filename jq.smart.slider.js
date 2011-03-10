@@ -1,6 +1,6 @@
 // -------------------------------------------------
 //  jQuery Smart Slider (beta)
-//  version 0.8.1
+//  version 0.8.2
 //  Licensed under the MIT
 //  
 //
