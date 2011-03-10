@@ -31,6 +31,7 @@ $.jQSS.prototype = {
 		leftLimit    : 0,
 		rightLimit   : 0,
 		movedVector  : '',
+		delimitNum   : 0.333,
 		
 		pageTotalNum : 0,
 		nowPageNum   : 0,
@@ -70,6 +71,13 @@ $.jQSS.prototype = {
 		_o.targetWidth = parseInt(_self.$Target.width(),10);
 		_o.rightLimit  = _o.targetWidth - _self.$Target.parent().width();
 		
+		if(_o.firstSelect){
+			var selectNum = _self.$Target.find(_o.firstSelect).index();
+			_self.$Target.find(_o.firstSelect).addClass('select');
+			_o.nowPageNum = Math.floor(selectNum/_o.rangeNum);
+			_self.$Target.css({'left' : (_o.nowPageNum*_o.slideWidth)*-1});
+		}
+		
 		// Set TouchEvent -------------------------
 		_self.addTouchEvent();
 		
@@ -102,8 +110,8 @@ $.jQSS.prototype = {
 		_self.$btnLeft  = _self.$element.parent().find(_o.leftBtn);
 		_self.$btnRight = _self.$element.parent().find(_o.rightBtn);
 		
-		_self.$btnLeft.click(function(ev){_self.slideMove('left', null); return false;});
-		_self.$btnRight.click(function(ev){_self.slideMove('right', null); return false;});
+		_self.$btnRight.click(function(ev){_self.slideMove('left', null); return false;});
+		_self.$btnLeft.click(function(ev){_self.slideMove('right', null); return false;});
 		
 		_self.LRBtnSwitch();
 	},
@@ -128,11 +136,8 @@ $.jQSS.prototype = {
 		setPosElement.append(setPosList);
 		$el.after(setPosElement);
 		
-		if(_o.firstSelect.length > 0){
-			//
-		}else{
-			$el.parent().find('.jQSSPosList>li').eq(0).children('a').addClass('select');
-		}
+		$el.parent().find('.jQSSPosList>li').children('a').click(function(){return false;});
+		$el.parent().find('.jQSSPosList>li').eq(_o.nowPageNum).children('a').addClass('select');
 	},
 	
 	// Touch Event Setting -----------------------------
@@ -205,7 +210,14 @@ $.jQSS.prototype = {
 				if(_o.movedVector != 'vertical') _self.slideMove('right', _o.pageTotalNum-1);
 			}else{
 				var touchVector = (_o.vectorX > 0) ? 'left' : 'right';
-				var setNum = Math.round(Math.abs(nowTargetX/_o.slideWidth));
+				
+				var setNum;
+				if(touchVector == 'right'){
+					setNum = Math.floor(Math.abs(nowTargetX/_o.slideWidth)+(_o.delimitNum));
+				}else{
+					setNum = Math.floor(Math.abs(nowTargetX/_o.slideWidth)+(1-_o.delimitNum));
+				}
+				
 				_self.slideMove(touchVector, setNum);
 			}
 			
@@ -248,9 +260,9 @@ $.jQSS.prototype = {
 		_self.$btnRight.show();
 		
 		if(_o.nowPageNum == 0){
-			_self.$btnRight.hide();
-		}else if(_o.nowPageNum == _o.pageTotalNum-1){
 			_self.$btnLeft.hide();
+		}else if(_o.nowPageNum == _o.pageTotalNum-1){
+			_self.$btnRight.hide();
 		}
 	}
 };
@@ -260,10 +272,5 @@ $.fn.jQSS = function(options){
 		new $.jQSS(this, options);
 	});
 };
-
-/*$(function(){
-	$('.topicMenu').jQSS();
-	$('.jQSS').jQSS();
-});*/
 
 })(jQuery);
