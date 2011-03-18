@@ -1,6 +1,6 @@
 // -------------------------------------------------
 //  jQuery Smart Slider (beta)
-//  version 0.8.2
+//  version 0.8.8
 //  Licensed under the MIT
 //  
 //
@@ -12,10 +12,7 @@ $.jQSS = function(element, _opt){
 	this.options  = $.extend({}, this.options, _opt);
 	this.$element = $(element);
 	this._init();
-	(this.options.LRBtn) ? this.addBottonEvent() : null;
-	(this.options.posSwitch) ? this.addPositionSwitch() : null;
 };
-
 
 $.jQSS.prototype = {
 	// Set Options ------------------------------------
@@ -36,14 +33,16 @@ $.jQSS.prototype = {
 		pageTotalNum : 0,
 		nowPageNum   : 0,
 		
-		slideWidth   : 0,       // 一回にスライドする幅
-		rangeNum     : 0,       // 子要素をいくつ区切りでスライドさせるか
-		LRBtn        : false,   // LRボタンを付けるかどうか
-		leftBtn      : '.jQSSL',// Lボタンのクラス名
-		rightBtn     : '.jQSSR',// Rボタンのクラス名
-		posSwitch    : false,   // 場所を示すやつを付けるかどうか
-		posMark      : '●',
-		firstSelect  : ''
+		slideWidth   : 0,          // 一回にスライドする幅
+		rangeNum     : 0,          // 子要素をいくつ区切りでスライドさせるか
+		LRBtn        : false,      // LRボタンを付けるかどうか
+		leftBtn      : '.jQSSL',   // Lボタンのクラス名
+		rightBtn     : '.jQSSR',   // Rボタンのクラス名
+		posSwitch    : false,      // 場所を示すやつを付けるかどうか
+		posMark      : '%E2%97%8F',//●（かなを使う場合はエンコードする）
+		firstSelect  : '',
+		
+		touchCancelType : ['t-01c'] //フリックの動きをキャンセルする機種番を指定する
 	},
 	
 	// Set DOM Name -----------------------------------
@@ -51,8 +50,6 @@ $.jQSS.prototype = {
 	$btnLeft  : null,
 	$btnRight : null,
 	$posList  : null,
-	
-	
 	
 	_init : function(){
 		var _self = this;
@@ -71,6 +68,7 @@ $.jQSS.prototype = {
 		_o.targetWidth = parseInt(_self.$Target.width(),10);
 		_o.rightLimit  = _o.targetWidth - _self.$Target.parent().width();
 		
+		
 		if(_o.firstSelect){
 			var selectNum = _self.$Target.find(_o.firstSelect).index();
 			_self.$Target.find(_o.firstSelect).addClass('select');
@@ -78,24 +76,39 @@ $.jQSS.prototype = {
 			_self.$Target.css({'left' : (_o.nowPageNum*_o.slideWidth)*-1});
 		}
 		
-		// Set TouchEvent -------------------------
-		_self.addTouchEvent();
-		
 		// Set Page Number ------------------------
-		var childrenNum = _self.$Target.find('li, div, p').length;
-		_o.pageTotalNum = (_o.rangeNum > 1) ? Math.ceil(childrenNum/_o.rangeNum) : childrenNum;
+		var childrenNum = _self.$Target.children('li, div, p').length;
 		
-		// Set slideWidth -------------------------
-		if(_o.rangeNum == 0 && _o.slideWidth == 0){
-			_o.slideWidth = parseInt($el.css('width'),10);
-		}else if(_o.rangeNum > 0 && _o.slideWidth == 0){
-			for(var i=0; i<_o.rangeNum; i++){
-				var eachChild = _self.$Target.children('li').eq(i);
-				_o.slideWidth += parseInt(eachChild.css('width'),10);
-				_o.slideWidth += parseInt(eachChild.css('margin-left'),10);
-				_o.slideWidth += parseInt(eachChild.css('margin-right'),10);
-				_o.slideWidth += parseInt(eachChild.css('padding-left'),10);
-				_o.slideWidth += parseInt(eachChild.css('padding-right'),10);
+		_o.pageTotalNum = (_o.rangeNum >= 1) ? Math.ceil(childrenNum/_o.rangeNum) : Math.ceil(childrenNum/Math.ceil(_self.$Target.parent().width()/_self.$Target.children('li, div, p').width()));
+		
+		var touchCancel = false;
+		for(var i = 0; i<_o.touchCancelType.length; i++){
+			if(_UA.indexOf(_o.touchCancelType[i]) > -1){
+				touchCancel = true;
+			}
+		}
+		
+		if(_o.pageTotalNum <= 1){
+			_self.addBottonEvent();
+		}else{
+			// Set TouchEvent -------------------------
+			(!touchCancel) ? _self.addTouchEvent() : null;
+			
+			(_o.LRBtn) ? _self.addBottonEvent() : null;
+			(_o.posSwitch) ? _self.addPositionSwitch() : null;
+			
+			// Set slideWidth -------------------------
+			if(_o.rangeNum == 0 && _o.slideWidth == 0){
+				_o.slideWidth = parseInt($el.css('width'),10);
+			}else if(_o.rangeNum > 0 && _o.slideWidth == 0){
+				for(var i=0; i<_o.rangeNum; i++){
+					var eachChild = _self.$Target.children('li').eq(i);
+					_o.slideWidth += parseInt(eachChild.css('width'),10);
+					_o.slideWidth += parseInt(eachChild.css('margin-left'),10);
+					_o.slideWidth += parseInt(eachChild.css('margin-right'),10);
+					_o.slideWidth += parseInt(eachChild.css('padding-left'),10);
+					_o.slideWidth += parseInt(eachChild.css('padding-right'),10);
+				}
 			}
 		}
 	},
@@ -113,7 +126,12 @@ $.jQSS.prototype = {
 		_self.$btnRight.click(function(ev){_self.slideMove('left', null); return false;});
 		_self.$btnLeft.click(function(ev){_self.slideMove('right', null); return false;});
 		
-		_self.LRBtnSwitch();
+		if(_o.pageTotalNum <= 1){
+			_self.$btnLeft.hide();
+			_self.$btnRight.hide();
+		}else{
+			_self.LRBtnSwitch();
+		}
 	},
 	
 	// Position Switch Setting -------------------------
@@ -128,7 +146,7 @@ $.jQSS.prototype = {
 		var eachPosList   = $('<li></li>').append($('<a></a>').attr({'href':'#'}));
 		
 		for(var i=0; i<_o.pageTotalNum; i++){
-			var eachPosMark = (_o.posMark == 'number') ? i+1 : _o.posMark;
+			var eachPosMark = (_o.posMark == 'number') ? i+1 : decodeURI(_o.posMark);
 			eachPosList.children('a').text(eachPosMark);
 			setPosList.append(eachPosList.clone());
 		}
@@ -151,22 +169,29 @@ $.jQSS.prototype = {
 		_self.$Target[0].addEventListener("touchend",   endHandler, false);
 		_self.$Target[0].addEventListener("touchcancel",cancelHandler, false);
 		
-		var LinkURL = null;
+		$el[0].addEventListener("click", cancelHandler, false);
+		_self.$Target.find('a').click(cancelHandler);
 		
-		_self.$Target.find('a').click(function(ev){
+		/*_self.$Target.find('a')[0].addEventListener("touchstart", cancelHandler, false);
+		_self.$Target.find('a')[0].addEventListener("touchend", cancelHandler, false);*/
+		
+		var LinkURL = '';
+		
+		function cancelHandler(ev){
+			//console.log(ev.type);
+			//alert(ev.type +':'+ LinkURL + $(this).attr('href'));
 			ev.preventDefault();
-			if(LinkURL == 'start'){
+			ev.stopPropagation();
+			if(LinkURL.indexOf('startend') > -1 && $(this).attr('href').length > -1){
 				location.href = $(this).attr('href');
 			}
 			return false;
-		});
-		
-		function cancelHandler(ev){
-			//alert('Cancel!');
 		}
 		
 		function startHandler(ev){
-			LinkURL = 'start';
+			ev.stopPropagation();
+			LinkURL = '';
+			LinkURL += 'start';
 			var touch = ev.touches[0];
 		
 			_o.startX = touch.screenX;
@@ -176,7 +201,8 @@ $.jQSS.prototype = {
 		}
 		
 		function moveHandler(ev){
-			LinkURL = 'move';
+			ev.stopPropagation();
+			LinkURL += 'move';
 			var touch = ev.touches[0];
 			
 			_o.moveX = touch.screenX;//screenX//pageX
@@ -201,8 +227,11 @@ $.jQSS.prototype = {
 		
 		function endHandler(ev){
 			ev.preventDefault();
+			ev.stopPropagation();
+			LinkURL += 'end';
 			
 			var nowTargetX = parseInt(_self.$Target.offset().left,10);
+			
 			
 			if(nowTargetX > _o.leftLimit){
 				if(_o.movedVector != 'vertical') _self.slideMove('left' , 0);

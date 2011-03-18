@@ -5,36 +5,47 @@
 <title>jQuery Smart Slider</title>
 
 <meta name="format-detection" content="telephone=no" />
-<meta name="viewport" content="width=320,maximum-scale=3.0,minimum-scale=0.5,user-scalable=1" />
+<meta name="viewport" content="width=device-width,maximum-scale=3.0,minimum-scale=0.5,user-scalable=1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 
 <link rel="stylesheet" href="common.css">
 <style>
 #main{
-	padding:20px;
+	/*padding:20px;*/
 	background-color:#CCC;
 }
-.jQSS{
+.demo{
+	position:relative;
+	margin:0px 0px 40px 0px;
+}
+div[class^="menuListBox"]{
 	position:relative;
 	width:100%;
+	height:80px;
 	overflow-x:auto;
   overflow-y:hidden;
 }
-.jQSS>ul{
+ul[class^="menuList"]{
 	position:relative;
+	width:800px;
+	height:80px;
 }
-.jQSS>ul>li{
+ul[class^="menuList"]>li{
 	float:left;
 	position:relative;
 	width:80px;
 	height:80px;
 }
-.jQSS>ul>li p{
+ul[class^="menuList"]>li p{
 	position:absolute;
 	top:40px;
-	left:35px;
+	left:0px; 
+	display:block;
+	width:80px;
 	font-size:20px;
+	text-align:center;
 }
+
 
 .jQSSBtn{
 	position:relative;
@@ -66,7 +77,12 @@ p.debag{
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script src="jq.smart.slider.js"></script>
-
+<script>
+$(function(){
+	$('.menuListBox2').jQSS();
+	//$('.jQSS').jQSS({slideWidth:288, rangeNum:3, LRBtn:true, posSwitch:true, firstSelect:'.usushio'});
+});
+</script>
 </head>
 <body>
 <header>
@@ -76,31 +92,70 @@ p.debag{
 
 <div id="main">
 <section class="demo">
-<h2>Flick Only</h2>
-<div class="jQSS">
-<ul>
-<li><a href=""><p>1</p><img src="img/pan_icon_black.gif" alt=""></a></li>
-<li><a href=""><p>2</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
-<li><a href=""><p>3</p><img src="img/pan_icon_green.gif" alt=""></a></li>
-<li><a href=""><p>4</p><img src="img/pan_icon_red.gif" alt=""></a></li>
-<li><a href=""><p>5</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
-<li><a href=""><p>6</p><img src="img/pan_icon_black.gif" alt=""></a></li>
-<li><a href=""><p>7</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
-<li><a href=""><p>8</p><img src="img/pan_icon_green.gif" alt=""></a></li>
-<li><a href=""><p>9</p><img src="img/pan_icon_red.gif" alt=""></a></li>
-<li><a href=""><p>10</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+<h2>実装前の状態</h2>
+<p>通常の横スクロールなので、iPhoneでは二本指でスクロールします。</p>
+<div class="menuListBox1">
+<ul class="menuList1">
+<li><a href="#"><p>1</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href="#"><p>2</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href="#"><p>3</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href="#"><p>4</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href="#"><p>5</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+<li><a href="#"><p>6</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href="#"><p>7</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href="#"><p>8</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href="#"><p>9</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href="#"><p>10</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
 </ul>
-</div>
+<!-- / .jQSS --></div>
+<!-- / .demo --></section>
 
+<section class="demo">
+<h2>実装１</h2>
+<p>ノーマルな実装です。フリックでスクロールできます。</p>
+<div class="menuListBox2">
+<ul class="menuList2">
+<li><a href="#"><p>1</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href="#"><p>2</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href="#"><p>3</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href="#"><p>4</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href="#"><p>5</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+<li><a href="#"><p>6</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href="#"><p>7</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href="#"><p>8</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href="#"><p>9</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href="#"><p>10</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+</ul>
+<!-- / .menuListBox2 --></div>
+<p class="debag"></p>
+<!-- / .demo --></section>
+
+<section class="demo">
+<h2>実装</h2>
+<p>ノーマルな実装です。フリックでスクロールできます。</p>
+<div class="menuListBox3">
+<ul class="menuList3">
+<li><a href="#"><p>1</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href="#"><p>2</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href="#"><p>3</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href="#"><p>4</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href="#"><p>5</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+<li><a href="#"><p>6</p><img src="img/pan_icon_black.gif" alt=""></a></li>
+<li><a href="#"><p>7</p><img src="img/pan_icon_blue.gif" alt=""></a></li>
+<li><a href="#"><p>8</p><img src="img/pan_icon_green.gif" alt=""></a></li>
+<li><a href="#"><p>9</p><img src="img/pan_icon_red.gif" alt=""></a></li>
+<li><a href="#"><p>10</p><img src="img/pan_icon_yellow.gif" alt=""></a></li>
+</ul>
+<!-- / .menuListBox3 --></div>
 <div class="jQSSBtn">
 <ul>
   <li class="jQSSL"><a href="#">←</a></li>
   <li class="jQSSR"><a href="#">→</a></li>
 </ul>
-</div>
+<!-- / .jQSSBtn --></div>
+<!-- / .demo --></section>
 
 <p class="debag"></p>
-<!-- / .demo --></section>
 <!-- / #main --></div>
 
 <section class="console">
